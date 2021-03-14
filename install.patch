@@ -1,0 +1,12 @@
+--- dnf-plugins-core-4.0.19/CMakeLists.txt~	2021-01-28 18:02:06.000000000 +0100
++++ dnf-plugins-core-4.0.19/CMakeLists.txt	2021-03-14 18:56:13.218300360 +0100
+@@ -18,7 +18,9 @@
+     MESSAGE (FATAL_ERROR "Invalid PYTHON_DESIRED value: " ${PYTHON_DESIRED})
+ ENDIF()
+ 
++IF (NOT PYTHON_INSTALL_DIR)
+ EXECUTE_PROCESS(COMMAND ${PYTHON_EXECUTABLE} -c "from sys import stdout; from distutils import sysconfig; stdout.write(sysconfig.get_python_lib())" OUTPUT_VARIABLE PYTHON_INSTALL_DIR)
++ENDIF()
+ MESSAGE(STATUS "Python install dir is ${PYTHON_INSTALL_DIR}")
+ 
+ SET (SYSCONFDIR /etc)

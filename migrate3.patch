@@ -1,0 +1,58 @@
+--- dnf-plugins-core-4.0.19/doc/CMakeLists.txt~	2021-01-28 18:02:06.000000000 +0100
++++ dnf-plugins-core-4.0.19/doc/CMakeLists.txt	2021-03-14 18:59:48.321737831 +0100
+@@ -40,10 +40,8 @@
+     ${CMAKE_CURRENT_BINARY_DIR}/yum-copr.8
+     ${CMAKE_CURRENT_BINARY_DIR}/yum-versionlock.8
+ 	DESTINATION share/man/man8)
+-if (${PYTHON_VERSION_MAJOR} STREQUAL "2")
+ INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/dnf-migrate.8
+         DESTINATION share/man/man8)
+-endif()
+ 
+ if (${WITHOUT_LOCAL} STREQUAL "0")
+ INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/dnf-local.8
+--- dnf-plugins-core-4.0.19/doc/conf.py~	2021-01-28 18:02:06.000000000 +0100
++++ dnf-plugins-core-4.0.19/doc/conf.py	2021-03-14 19:01:40.081790450 +0100
+@@ -80,8 +80,6 @@
+ # List of patterns, relative to source directory, that match files and
+ # directories to ignore when looking for source files.
+ exclude_patterns = ['_build']
+-if sys.version_info[0] > 2:
+-    exclude_patterns.append('migrate.rst')
+ 
+ # The reST default role (used for this markup: `text`) to use for all
+ # documents.
+@@ -295,8 +293,7 @@
+     ('dnf-utils', 'yum-utils', u'classic YUM utilities implemented as CLI shims on top of DNF',
+      AUTHORS, 1),
+ ]
+-if sys.version_info[0] < 3:
+-    man_pages.append(('migrate', 'dnf-migrate', u'DNF migrate Plugin', AUTHORS, 8))
++man_pages.append(('migrate', 'dnf-migrate', u'DNF migrate Plugin', AUTHORS, 8))
+ 
+ # If true, show URL addresses after external links.
+ #man_show_urls = False
+--- dnf-plugins-core-4.0.19/plugins/CMakeLists.txt~	2021-01-28 18:02:06.000000000 +0100
++++ dnf-plugins-core-4.0.19/plugins/CMakeLists.txt	2021-03-14 18:50:41.048120884 +0100
+@@ -11,9 +11,7 @@
+ if (${WITHOUT_LOCAL} STREQUAL "0")
+ INSTALL (FILES local.py DESTINATION ${PYTHON_INSTALL_DIR}/dnf-plugins)
+ endif()
+-if (${PYTHON_VERSION_MAJOR} STREQUAL "2")
+ INSTALL (FILES migrate.py DESTINATION ${PYTHON_INSTALL_DIR}/dnf-plugins)
+-endif()
+ INSTALL (FILES needs_restarting.py DESTINATION ${PYTHON_INSTALL_DIR}/dnf-plugins)
+ INSTALL (FILES post-transaction-actions.py DESTINATION ${PYTHON_INSTALL_DIR}/dnf-plugins)
+ INSTALL (FILES repoclosure.py DESTINATION ${PYTHON_INSTALL_DIR}/dnf-plugins)
+--- dnf-plugins-core-4.0.19/plugins/migrate.py~	2021-01-28 18:02:06.000000000 +0100
++++ dnf-plugins-core-4.0.19/plugins/migrate.py	2021-03-14 18:50:31.654781827 +0100
+@@ -16,9 +16,6 @@
+ # Red Hat, Inc.
+ #
+ 
+-from __future__ import absolute_import
+-from __future__ import unicode_literals
+-
+ from dnf.db.history import SwdbInterface
+ from dnfpluginscore import _, logger
+ 
