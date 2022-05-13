@@ -5,22 +5,22 @@
 #
 Summary:	Core Plugins for DNF
 Name:		dnf-plugins-core
-Version:	4.0.19
-Release:	3
+Version:	4.2.0
+Release:	1
 License:	GPL v2+
 Source0:	https://github.com/rpm-software-management/dnf-plugins-core/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	ab4a9b6919a70943d45404943ae49a21
+# Source0-md5:	7f18b00a45508782256690c3a02fc8fc
 Patch0:		install.patch
 Patch1:		migrate3.patch
 URL:		https://github.com/rpm-software-management/dnf-plugins-core
 BuildRequires:	cmake
-BuildRequires:	dnf >= 4.2.22
+BuildRequires:	dnf >= 4.11.0
 BuildRequires:	gettext
 BuildRequires:	python3-dbus
 BuildRequires:	python3-devel
 BuildRequires:	python3-nose
 BuildRequires:	sphinx-pdg
-Requires:	dnf >= 4.2.22
+Requires:	dnf >= 4.11.0
 Requires:	python3-dateutil
 Requires:	python3-dbus
 Requires:	python3-hawkey >= 0.46.1
@@ -76,6 +76,17 @@ Requires:	yum
 %description -n dnf-plugin-migrate
 Migrate Plugin for DNF. Migrates history, group and yumdb data from
 yum to dnf.
+
+%package -n dnf-plugin-modulesync
+Summary:	Download module metadata and packages and create repository
+Requires:	createrepo_c >= 0.17.4
+Requires:	python3-%{name} = %{version}-%{release}
+Provides:	dnf-command(modulesync)
+Provides:	dnf-plugin-modulesync = %{version}-%{release}
+
+%description -n dnf-plugin-modulesync
+Download module metadata from all enabled repositories, module
+artifacts and profiles of matching modules and create repository.
 
 %package -n dnf-plugin-post-transaction-actions
 Summary:	Post transaction actions Plugin for DNF
@@ -292,6 +303,12 @@ rm -rf $RPM_BUILD_ROOT
 %{py3_sitescriptdir}/dnf-plugins/migrate.*
 %{py3_sitescriptdir}/dnf-plugins/__pycache__/migrate.*
 %{_mandir}/man8/dnf-migrate.8*
+
+%files -n dnf-plugin-modulesync
+%defattr(644,root,root,755)
+%{py3_sitescriptdir}/dnf-plugins/modulesync.*
+%{py3_sitescriptdir}/dnf-plugins/__pycache__/modulesync.*
+%{_mandir}/man8/dnf-modulesync.8*
 
 %files -n dnf-plugin-post-transaction-actions
 %defattr(644,root,root,755)
