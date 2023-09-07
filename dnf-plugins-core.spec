@@ -13,7 +13,7 @@ Source0:	https://github.com/rpm-software-management/dnf-plugins-core/archive/%{v
 Patch0:		install.patch
 Patch1:		migrate3.patch
 URL:		https://github.com/rpm-software-management/dnf-plugins-core
-BuildRequires:	cmake
+BuildRequires:	cmake >= 2.4
 BuildRequires:	dnf >= 4.11.0
 BuildRequires:	gettext
 BuildRequires:	python3-dbus
