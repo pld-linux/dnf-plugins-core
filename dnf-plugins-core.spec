@@ -5,23 +5,25 @@
 #
 Summary:	Core Plugins for DNF
 Name:		dnf-plugins-core
-Version:	4.2.0
-Release:	2
+Version:	4.4.2
+Release:	1
 License:	GPL v2+
 Source0:	https://github.com/rpm-software-management/dnf-plugins-core/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	7f18b00a45508782256690c3a02fc8fc
+# Source0-md5:	afd6975140ff877f0e7a4da088fa4e2e
 Patch0:		install.patch
 Patch1:		migrate3.patch
 URL:		https://github.com/rpm-software-management/dnf-plugins-core
 BuildRequires:	cmake >= 2.4
 BuildRequires:	dnf >= 4.11.0
 BuildRequires:	gettext
+BuildRequires:	pkgconfig
 BuildRequires:	python3-dbus
 BuildRequires:	python3-devel
 BuildRequires:	python3-modules
 BuildRequires:	python3-nose
 BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	sphinx-pdg
+BuildRequires:	systemd-devel
 Requires:	dnf >= 4.11.0
 Requires:	python3-dateutil
 Requires:	python3-dbus
@@ -107,6 +109,13 @@ Requires:	dnf-plugin-leaves = %{version}-%{release}
 Show-leaves Plugin for DNF. List all installed packages that are no
 longer required by any other installed package after a transaction.
 
+%package -n dnf-plugin-system-upgrade
+Summary:	System Upgrade Plugin for DNF
+Requires:	%{name} = %{version}-%{release}
+
+%description -n dnf-plugin-system-upgrade
+System Upgrade Plugin for DNF.
+
 %package -n dnf-plugin-versionlock
 Summary:	Version Lock Plugin for DNF
 Requires:	%{name} = %{version}-%{release}
@@ -125,6 +134,8 @@ protect packages from being updated by newer versions.
 %patch1 -p1
 
 mkdir build
+
+%{__sed} -i -e s/dnf-3/dnf/ etc/systemd/dnf-system-upgrade.service
 
 %build
 cd build
@@ -324,6 +335,14 @@ rm -rf $RPM_BUILD_ROOT
 %{py3_sitescriptdir}/dnf-plugins/show_leaves.*
 %{py3_sitescriptdir}/dnf-plugins/__pycache__/show_leaves.*
 %{_mandir}/man8/dnf-show-leaves.8*
+
+%files -n dnf-plugin-system-upgrade
+%defattr(644,root,root,755)
+%{py3_sitescriptdir}/dnf-plugins/system_upgrade.*
+%{py3_sitescriptdir}/dnf-plugins/__pycache__/system_upgrade.*
+%{systemdunitdir}/dnf-system-upgrade-cleanup.service
+%{systemdunitdir}/dnf-system-upgrade.service
+%{_mandir}/man8/dnf-system-upgrade.8*
 
 %files -n dnf-plugin-versionlock
 %defattr(644,root,root,755)
