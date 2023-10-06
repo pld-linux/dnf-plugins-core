@@ -15,7 +15,7 @@ Patch1:		migrate3.patch
 URL:		https://github.com/rpm-software-management/dnf-plugins-core
 BuildRequires:	cmake >= 2.4
 BuildRequires:	dnf >= 4.11.0
-BuildRequires:	gettext
+BuildRequires:	gettext-tools
 BuildRequires:	pkgconfig
 BuildRequires:	python3-dbus
 BuildRequires:	python3-devel
