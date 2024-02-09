@@ -5,11 +5,11 @@
 #
 Summary:	Core Plugins for DNF
 Name:		dnf-plugins-core
-Version:	4.4.4
+Version:	4.5.0
 Release:	1
 License:	GPL v2+
 Source0:	https://github.com/rpm-software-management/dnf-plugins-core/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	1dfa170aed9e178983474381fafaf0b8
+# Source0-md5:	19fa3a9dbe9ec6b55c745dbe17f13d73
 Patch0:		install.patch
 Patch1:		migrate3.patch
 URL:		https://github.com/rpm-software-management/dnf-plugins-core
