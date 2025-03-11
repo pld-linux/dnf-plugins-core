@@ -6,7 +6,7 @@
 Summary:	Core Plugins for DNF
 Name:		dnf-plugins-core
 Version:	4.5.0
-Release:	
+Release:	2
 License:	GPL v2+
 Source0:	https://github.com/rpm-software-management/dnf-plugins-core/archive/%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	19fa3a9dbe9ec6b55c745dbe17f13d73
@@ -83,8 +83,8 @@ yum to dnf.
 
 %package -n dnf-plugin-modulesync
 Summary:	Download module metadata and packages and create repository
-Requires:	createrepo_c >= 0.17.4
 Requires:	%{name} = %{version}-%{release}
+Requires:	createrepo_c >= 0.17.4
 Provides:	dnf-command(modulesync)
 
 %description -n dnf-plugin-modulesync
@@ -130,8 +130,8 @@ protect packages from being updated by newer versions.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+%patch -P 0 -p1
+%patch -P 1 -p1
 
 mkdir build
 
