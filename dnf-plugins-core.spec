@@ -20,7 +20,6 @@ BuildRequires:	pkgconfig
 BuildRequires:	python3-dbus
 BuildRequires:	python3-devel
 BuildRequires:	python3-modules
-BuildRequires:	python3-nose
 BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	sphinx-pdg
 BuildRequires:	systemd-devel
